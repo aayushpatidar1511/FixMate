@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: fixmate-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: singapore
+    autoDeploy: true
+    healthCheckPath: /api/categories
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PAYMENT_MODE
+        value: MOCK
