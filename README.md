@@ -1,10 +1,14 @@
 # FixMate – Local Service Booking & Management Platform
 
+**Engineered by [Aayush Patidar](https://github.com/aayushpatidar1511)**  
+🚀 **Live Production Web Application**: [https://fixmate-aayush.onrender.com/](https://fixmate-aayush.onrender.com/) *(or [https://fixmate-api.onrender.com/](https://fixmate-api.onrender.com/))*  
+📦 **GitHub Portfolio**: [https://github.com/aayushpatidar1511/FixMate](https://github.com/aayushpatidar1511/FixMate)
+
+[![Author](https://img.shields.io/badge/Author-Aayush%20Patidar-blueviolet.svg)](https://github.com/aayushpatidar1511)
 [![Java](https://img.shields.io/badge/Java-17%20%7C%2021%20%7C%2025-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-blue.svg)](https://www.docker.com/)
-[![Architecture](https://img.shields.io/badge/Architecture-Clean%20Layered%20%2B%20ACID-indigo.svg)](#system-architecture)
 
 > **FixMate** is a production-style, portfolio-ready local services marketplace connecting customers with verified local technicians (electricians, plumbers, AC mechanics, carpenters, cleaners) featuring real-time slot scheduling, server-calculated pricing, double-entry provider ledger, and pluggable payment gateways.
 
