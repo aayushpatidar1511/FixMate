@@ -1,6 +1,6 @@
 # FixMate – Local Service Booking & Management Platform
 
-🚀 **Live Production Platform**: [https://fixmate-aayush.onrender.com/](https://fixmate-aayush.onrender.com/)  
+🚀 **Live Production Platform**: [https://fixmate-api.onrender.com/](https://fixmate-api.onrender.com/)  
 📦 **GitHub Repository**: [https://github.com/aayushpatidar1511/FixMate](https://github.com/aayushpatidar1511/FixMate)
 
 [![Java](https://img.shields.io/badge/Java-17%20%7C%2021%20%7C%2025-orange.svg)](https://www.oracle.com/java/)
