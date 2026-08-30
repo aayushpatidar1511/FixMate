@@ -141,4 +141,12 @@ public class BookingServiceTest {
 
         assertThrows(BadRequestException.class, () -> bookingService.createBooking(req, 1L));
     }
+
+    @Test
+    void testPrintBcryptHash() {
+        org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder enc = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+        String generated = enc.encode("Password@123");
+        System.out.println("GEN_BCRYPT_HASH=" + generated);
+        System.out.println("MATCH_TEST=" + enc.matches("Password@123", "$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC"));
+    }
 }

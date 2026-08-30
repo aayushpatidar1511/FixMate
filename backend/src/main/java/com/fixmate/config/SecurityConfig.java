@@ -54,8 +54,8 @@ public class SecurityConfig {
                 // Auth APIs
                 .requestMatchers("/api/auth/**").permitAll()
                 // Public catalog and search
-                .requestMatchers(HttpMethod.GET, "/api/categories/**", "/api/services/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/providers/nearby", "/api/providers/search", "/api/providers/{id:[0-9]+}", "/api/providers/{id:[0-9]+}/availability", "/api/providers/{id:[0-9]+}/reviews").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/categories", "/api/categories/**", "/api/services", "/api/services/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/providers", "/api/providers/**").permitAll()
                 // Role Specific Portals
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/provider/**").hasAnyRole("PROVIDER", "ADMIN")

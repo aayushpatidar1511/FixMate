@@ -1,7 +1,7 @@
 // FixMate - Smart Hybrid API Client with Automatic Live/Offline Switching
-const API_BASE_URL = window.location.origin.includes(':8080') 
+const API_BASE_URL = window.location.origin.includes('onrender.com') || window.location.origin.includes(':8080')
   ? window.location.origin + '/api' 
-  : 'http://localhost:8080/api';
+  : 'https://fixmate-api.onrender.com/api';
 
 const Api = {
   isLiveBackend: null,
