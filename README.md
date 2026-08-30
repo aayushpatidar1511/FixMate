@@ -1,10 +1,8 @@
 # FixMate – Local Service Booking & Management Platform
 
-**Engineered by [Aayush Patidar](https://github.com/aayushpatidar1511)**  
-🚀 **Live Production Web Application**: [https://fixmate-aayush.onrender.com/](https://fixmate-aayush.onrender.com/) *(or [https://fixmate-api.onrender.com/](https://fixmate-api.onrender.com/))*  
-📦 **GitHub Portfolio**: [https://github.com/aayushpatidar1511/FixMate](https://github.com/aayushpatidar1511/FixMate)
+🚀 **Live Production Platform**: [https://fixmate-aayush.onrender.com/](https://fixmate-aayush.onrender.com/)  
+📦 **GitHub Repository**: [https://github.com/aayushpatidar1511/FixMate](https://github.com/aayushpatidar1511/FixMate)
 
-[![Author](https://img.shields.io/badge/Author-Aayush%20Patidar-blueviolet.svg)](https://github.com/aayushpatidar1511)
 [![Java](https://img.shields.io/badge/Java-17%20%7C%2021%20%7C%2025-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)](https://www.mysql.com/)
