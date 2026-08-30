@@ -1,0 +1,40 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: fixmate-backend
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/fixmate_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+
+# FixMate Custom Application Configuration
+fixmate:
+  jwt:
+    secret: ${JWT_SECRET:FixMateSecureTokenSecretKeyWithMoreThan256BitsForSecurityCompliantSigningAlgorithms2026}
+    expiration-ms: 86400000 # 24 hours in milliseconds
+  commission:
+    platform-fee-pct: 10.0
+    tax-pct: 18.0
+  payment:
+    mode: ${PAYMENT_MODE:MOCK} # 'MOCK' or 'RAZORPAY'
+    razorpay-key-id: ${RAZORPAY_KEY_ID:}
+    razorpay-key-secret: ${RAZORPAY_KEY_SECRET:}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://127.0.0.1:5500,http://localhost:5500,http://localhost:8080,http://127.0.0.1:8080,null,*}
+
+logging:
+  level:
+    root: INFO
+    com.fixmate: DEBUG
+    org.springframework.security: INFO

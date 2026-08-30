@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: fixmate-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fixmate_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./database/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
+      - ./database/03_indexes.sql:/docker-entrypoint-initdb.d/03_indexes.sql
+      - ./database/04_views.sql:/docker-entrypoint-initdb.d/04_views.sql
+      - ./database/05_procedures.sql:/docker-entrypoint-initdb.d/05_procedures.sql
+      - ./database/06_functions.sql:/docker-entrypoint-initdb.d/06_functions.sql
+      - ./database/07_triggers.sql:/docker-entrypoint-initdb.d/07_triggers.sql
+    networks:
+      - fixmate-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fixmate-api
+    restart: always
+    depends_on:
+      - mysqldb
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://mysqldb:3306/fixmate_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      PAYMENT_MODE: MOCK
+    networks:
+      - fixmate-network
+
+volumes:
+  mysql_data:
+
+networks:
+  fixmate-network:
+    driver: bridge

@@ -1,0 +1,25 @@
+# Maven build artifacts
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE & Editor files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+*.nbattrs
+
+# Logs & Temporary files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# OS files
+Desktop.ini
+$RECYCLE.BIN/

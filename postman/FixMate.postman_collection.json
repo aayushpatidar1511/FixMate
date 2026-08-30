@@ -1,0 +1,274 @@
+{
+  "info": {
+    "_postman_id": "9b12a83e-108a-493e-9087-fixmate2026",
+    "name": "FixMate - Local Service Booking & Management Platform API",
+    "description": "Comprehensive Postman API Collection covering Authentication, Catalog, Booking lifecycle, Payment reconciliation, and Admin operations.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "bookingId", "value": "1", "type": "string" },
+    { "key": "providerId", "value": "1", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "01 Authentication",
+      "item": [
+        {
+          "name": "Customer Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if(jsonData.success && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.data.token);",
+                  "    console.log('JWT Token saved to collection variable');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer123@fixmate.in\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Provider Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"provider123@fixmate.in\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin123@fixmate.in\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Register Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Rahul Verma\",\n  \"email\": \"rahul.verma@example.com\",\n  \"phone\": \"+919893012345\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register/customer", "host": ["{{baseUrl}}"], "path": ["auth", "register", "customer"] }
+          }
+        },
+        {
+          "name": "Get Authenticated User Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Categories & Services",
+      "item": [
+        {
+          "name": "Get Active Categories",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/categories", "host": ["{{baseUrl}}"], "path": ["categories"] }
+          }
+        },
+        {
+          "name": "Get Active Services",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/services", "host": ["{{baseUrl}}"], "path": ["services"] }
+          }
+        },
+        {
+          "name": "Search Services by Keyword",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/services/search?q=AC", "host": ["{{baseUrl}}"], "path": ["services", "search"], "query": [{ "key": "q", "value": "AC" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 Providers & Proximity",
+      "item": [
+        {
+          "name": "Search Providers by City",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/providers/search?city=Ujjain", "host": ["{{baseUrl}}"], "path": ["providers", "search"], "query": [{ "key": "city", "value": "Ujjain" }] }
+          }
+        },
+        {
+          "name": "Find Nearby Providers (Haversine Formula)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/providers/nearby?lat=23.1765&lon=75.7885&radius=15", "host": ["{{baseUrl}}"], "path": ["providers", "nearby"], "query": [{ "key": "lat", "value": "23.1765" }, { "key": "lon", "value": "75.7885" }, { "key": "radius", "value": "15" }] }
+          }
+        },
+        {
+          "name": "Get Provider Profile by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/providers/1", "host": ["{{baseUrl}}"], "path": ["providers", "1"] }
+          }
+        },
+        {
+          "name": "Check Provider Slot Availability on Date",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/providers/1/availability?date=2026-09-01", "host": ["{{baseUrl}}"], "path": ["providers", "1", "availability"], "query": [{ "key": "date", "value": "2026-09-01" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 Booking Lifecycle",
+      "item": [
+        {
+          "name": "Create Booking (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": 1,\n  \"serviceId\": 1,\n  \"addressId\": 1,\n  \"bookingDate\": \"2026-09-05\",\n  \"slotId\": 2,\n  \"problemDescription\": \"Ceiling fan stopped working after voltage surge\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] }
+          }
+        },
+        {
+          "name": "Get Customer Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/customer/bookings", "host": ["{{baseUrl}}"], "path": ["customer", "bookings"] }
+          }
+        },
+        {
+          "name": "Provider Accept Booking",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/accept", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "accept"] }
+          }
+        },
+        {
+          "name": "Provider Start Travel",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/start-travel", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "start-travel"] }
+          }
+        },
+        {
+          "name": "Provider Start Service",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/start-service", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "start-service"] }
+          }
+        },
+        {
+          "name": "Provider Complete Service",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/complete", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "complete"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 Payments",
+      "item": [
+        {
+          "name": "Initiate Payment Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/payments/create-order", "host": ["{{baseUrl}}"], "path": ["payments", "create-order"] }
+          }
+        },
+        {
+          "name": "Execute 1-Click Mock Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": 1,\n  \"method\": \"UPI\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/payments/mock-success", "host": ["{{baseUrl}}"], "path": ["payments", "mock-success"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 Admin & Analytics",
+      "item": [
+        {
+          "name": "Get Admin Dashboard Metrics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/dashboard", "host": ["{{baseUrl}}"], "path": ["admin", "dashboard"] }
+          }
+        },
+        {
+          "name": "Admin Approve Provider",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/admin/providers/19/verify", "host": ["{{baseUrl}}"], "path": ["admin", "providers", "19", "verify"] }
+          }
+        }
+      ]
+    }
+  ]
+}
