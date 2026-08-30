@@ -59,7 +59,7 @@ INSERT INTO users (user_id, full_name, email, phone, password_hash, role, status
 (37, 'Laxman Dhangar', 'laxman.rorepair@fixmate.in', '+919826022016', '$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC', 'PROVIDER', 'ACTIVE'),
 (38, 'Manoj Kushwaha', 'manoj.gadgets@fixmate.in', '+919826022017', '$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC', 'PROVIDER', 'ACTIVE'),
 (39, 'Nandkishore Gour', 'nandu.painter@fixmate.in', '+919826022018', '$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC', 'PROVIDER', 'ACTIVE'),
-(40, 'Prakash Gehlot', 'prakash.safehome@fixmate.in', '+919826022019', '$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC', 'PROVIDER', 'PENDING_VERIFICATION'),
+(40, 'Prakash Gehlot', 'prakash.safehome@fixmate.in', '+919826022019', '$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC', 'PROVIDER', 'ACTIVE'),
 (41, 'Radheshyam Kulmi', 'radheshyam.tech@fixmate.in', '+919826022020', '$2a$10$wT.fGevc/8g4gK9UoGg5U.k75yR45ZcE577n9M7r1bV5Uu7sD9yTC', 'PROVIDER', 'ACTIVE');
 
 -- ----------------------------------------------------------------------------

@@ -10,38 +10,38 @@ USE fixmate_db;
 -- 1. INDEX DEFINITIONS & RATIONALE
 -- ----------------------------------------------------------------------------
 
--- INDEX 1: Provider Slot Conflict Guard & Daily Schedule
--- Purpose: Ensures O(1) B-Tree lookup when checking if a provider already has
--- a non-cancelled booking on a target date and time slot.
--- Without this, every booking creation requires full-table scan on bookings.
-ALTER TABLE bookings 
-ADD INDEX IF NOT EXISTS idx_booking_conflict_guard (provider_id, booking_date, slot_id, booking_status);
+-- Safe index creation helper procedure
+DROP PROCEDURE IF EXISTS AddIndexSafely;
+DELIMITER //
+CREATE PROCEDURE AddIndexSafely(
+    IN tableName VARCHAR(64),
+    IN indexName VARCHAR(64),
+    IN indexColumns VARCHAR(255)
+)
+BEGIN
+    DECLARE idxCount INT;
+    SELECT COUNT(1) INTO idxCount
+    FROM information_schema.statistics
+    WHERE table_schema = DATABASE()
+      AND table_name = tableName
+      AND index_name = indexName;
+      
+    IF idxCount = 0 THEN
+        SET @sql = CONCAT('CREATE INDEX ', indexName, ' ON ', tableName, ' (', indexColumns, ')');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    END IF;
+END //
+DELIMITER ;
 
--- INDEX 2: Customer Booking History by Status
--- Purpose: Accelerates customer dashboard views filtering 'Active' vs 'Past' bookings.
-ALTER TABLE bookings 
-ADD INDEX IF NOT EXISTS idx_bookings_cust_status (customer_id, booking_status, created_at DESC);
-
--- INDEX 3: Geo-Local Provider Ranking Index
--- Purpose: Speeds up queries searching for verified providers in a given city
--- ordered by descending customer satisfaction ratings.
-ALTER TABLE service_providers 
-ADD INDEX IF NOT EXISTS idx_providers_city_active_rating (city, verification_status, rating_avg DESC);
-
--- INDEX 4: Category Service Catalog Browsing
--- Purpose: Speeds up service lookup within active categories.
-ALTER TABLE services 
-ADD INDEX IF NOT EXISTS idx_services_cat_active (category_id, is_active, base_price ASC);
-
--- INDEX 5: Financial Reconciliation & Daily Payout Ledger
--- Purpose: Speeds up financial aggregation across transaction dates and payment gateways.
-ALTER TABLE payments 
-ADD INDEX IF NOT EXISTS idx_payments_gateway_status_paid (payment_gateway, status, paid_at);
-
--- INDEX 6: Admin Open Disputes Desk
--- Purpose: Instant retrieval of non-resolved customer complaints ordered by submission time.
-ALTER TABLE complaints 
-ADD INDEX IF NOT EXISTS idx_complaints_status_created (status, created_at DESC);
+CALL AddIndexSafely('bookings', 'idx_booking_conflict_guard', 'provider_id, booking_date, slot_id, booking_status');
+CALL AddIndexSafely('bookings', 'idx_bookings_cust_status', 'customer_id, booking_status, created_at DESC');
+CALL AddIndexSafely('service_providers', 'idx_providers_city_active_rating', 'city, verification_status, rating_avg DESC');
+CALL AddIndexSafely('services', 'idx_services_cat_active', 'category_id, is_active, base_price ASC');
+CALL AddIndexSafely('payments', 'idx_payments_gateway_status_paid', 'payment_gateway, status, paid_at');
+CALL AddIndexSafely('complaints', 'idx_complaints_status_created', 'status, created_at DESC');
+DROP PROCEDURE IF EXISTS AddIndexSafely;
 
 -- ----------------------------------------------------------------------------
 -- 2. EXPLAIN DEMONSTRATION & PERFORMANCE ANALYSIS
