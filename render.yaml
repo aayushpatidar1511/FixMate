@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: fixmate-aayush
+    name: fixmate-api
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
